@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
@@ -36,13 +35,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestNeededPerms() {
-        val perms = mutableListOf<String>()
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_OWN_CALLS)
                 != PackageManager.PERMISSION_GRANTED
             ) {
-                val intent = Intent(Settings.ACTION_MANAGE_OWN_CALLS_SETTINGS)
+                val intent = Intent("android.settings.MANAGE_OWN_CALLS_SETTINGS")
                 startActivity(intent)
                 toggleSwitch.isChecked = false
                 Toast.makeText(this, "Grant MANAGE_OWN_CALLS in Settings, then toggle again", Toast.LENGTH_LONG).show()
